@@ -1,0 +1,13 @@
+sequenceDiagram
+    participant A as Agent
+    participant API as Application
+    participant Old as Current index
+    participant New as Versioned index
+
+    A->>New: Run bounded backfill
+    A->>API: Enable dual writes
+    API->>Old: Write
+    API->>New: Write
+    A->>New: Verify count and samples
+    A->>API: Move read alias
+    API->>New: Read

@@ -1,0 +1,60 @@
+\documentclass{texlr}
+
+\title{Search indexing migration}
+\author{Implementation agent}
+\date{30 August 2026}
+\project{Atlas Platform}
+\status{Ready for review}
+\repository{https://github.com/example/atlas}
+\revision{7f4c2de}
+
+\begin{document}
+\maketitle
+
+\section{Executive summary}
+
+The indexing pipeline now writes through a versioned adapter, backfills in
+bounded batches, and exposes a reversible cutover. Existing callers retain the
+same contract.
+
+\begin{callout}[Reviewer focus]
+Confirm that production credentials grant write access to the new index before
+changing the read alias.
+\end{callout}
+
+\section{Architecture}
+
+\begin{figure}[ht]
+  \centering
+  \graphviz[width=0.82\linewidth]{diagrams/architecture.dot}
+  \caption{Data flow after the migration.}
+  \label{fig:architecture}
+\end{figure}
+
+The application boundary in Figure~\ref{fig:architecture} keeps the search
+provider replaceable and makes rollback independent of the backfill.
+
+\section{Cutover sequence}
+
+\begin{figure}[ht]
+  \centering
+  \mermaid[width=0.95\linewidth]{diagrams/cutover.mmd}
+  \caption{Operational cutover and verification.}
+\end{figure}
+
+\decision{Keep the old index for seven days}{The retention window covers the
+highest-volume weekly job and permits a low-risk alias rollback.}
+
+\section{Verification}
+
+\begin{enumerate}
+  \item Run the consistency check against both indexes.
+  \item Compare document counts and sampled result ordering.
+  \item Move the read alias and observe error rate for 30 minutes.
+\end{enumerate}
+
+\begin{lstlisting}[language=bash,caption={Agent verification command}]
+./bin/search verify --old products-v1 --new products-v2
+\end{lstlisting}
+
+\end{document}

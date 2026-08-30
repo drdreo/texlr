@@ -1,0 +1,16 @@
+digraph Architecture {
+  graph [bgcolor="transparent", rankdir=LR, pad=0.2, nodesep=0.45, ranksep=0.65];
+  node [shape=box, style="rounded,filled", fontname="Helvetica", color="#3157D5", fillcolor="#F5F7FB", fontcolor="#172033", penwidth=1.2, margin="0.16,0.10"];
+  edge [color="#667085", penwidth=1.2, arrowsize=0.75];
+
+  api [label="Application API"];
+  adapter [label="Search adapter"];
+  queue [label="Backfill queue"];
+  current [label="Current index"];
+  next [label="Versioned index"];
+
+  api -> adapter;
+  adapter -> current [label=" read", fontname="Helvetica", fontcolor="#667085"];
+  adapter -> next [label=" dual write", fontname="Helvetica", fontcolor="#667085"];
+  queue -> next [label=" batches", fontname="Helvetica", fontcolor="#667085"];
+}

@@ -1,0 +1,12 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+The Texlr document class includes adapted material made available under the
+Creative Commons Attribution 4.0 International Public License.
+
+Authoritative legal code:
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+Human-readable summary:
+https://creativecommons.org/licenses/by/4.0/
+
+SPDX identifier: CC-BY-4.0
