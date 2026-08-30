@@ -16,6 +16,7 @@
 \RequirePackage[T1]{fontenc}
 \RequirePackage{lmodern}
 \RequirePackage{microtype}
+\RequirePackage{etoolbox}
 \RequirePackage[top=30mm,bottom=32mm,left=30mm,right=30mm]{geometry}
 \RequirePackage{xcolor}
 \RequirePackage{graphicx}
@@ -92,22 +93,24 @@
   {\small\bfseries\color{texlrAccent}\MakeUppercase{\texlrStatus}\par}
   \vspace{0.8em}
   {\huge\bfseries\color{texlrInk}\@title\par}
-  \vspace{0.7em}
-  {\large\color{texlrMuted}\texlrProject\par}
+  \ifdefempty{\texlrProject}{}{%
+    \vspace{0.7em}%
+    {\large\color{texlrMuted}\texlrProject\par}%
+  }
   \vspace{1.8em}
   \color{texlrRule}\hrule height 1pt
   \vspace{1em}
   \begin{tabularx}{\textwidth}{@{}>{\bfseries\color{texlrMuted}}l X@{}}
     Author & \@author \\
     Date & \@date \\
-    \ifx\texlrRepository\@empty\else Repository & \url{\texlrRepository} \\ \fi
-    \ifx\texlrRevision\@empty\else Revision & \texttt{\texlrRevision} \\ \fi
+    \ifdefempty{\texlrRepository}{}{Repository & \url{\texlrRepository} \\}
+    \ifdefempty{\texlrRevision}{}{Revision & \texttt{\texlrRevision} \\}
   \end{tabularx}
   \vspace{1em}
   \color{texlrRule}\hrule height 1pt
   \endgroup
   \vspace{2em}
-  \ifx\texlrRunningTitle\@empty\gdef\texlrRunningTitle{\@title}\fi
+  \ifdefempty{\texlrRunningTitle}{\global\let\texlrRunningTitle\@title}{}
 }
 \makeatother
 

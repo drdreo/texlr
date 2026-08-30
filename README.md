@@ -27,7 +27,7 @@ nix run . -- version
 Install into your profile:
 
 ```sh
-nix profile install github:drdreo/texlr
+nix profile add github:drdreo/texlr
 ```
 
 The package includes Texlr, Tectonic, Graphviz, Mermaid CLI, and Ghostscript
