@@ -52,7 +52,10 @@ Before authoring, read `references/authoring.md` from this skill directory.
    Never use `--force` to bypass an unrelated-directory safety error.
 9. On failure, inspect the JSON `error`, `logPath`, and retained `workDir`; fix
    the source and retry until validation and build both succeed.
-10. Verify the PDF, source directory, log, and `texlr-manifest.json` exist. Return
+10. Inspect the successful build log. Fix overfull boxes, missing characters,
+    and undefined references before delivery. Review underfull-box warnings
+    visually and keep them only when they do not harm the layout.
+11. Verify the PDF, source directory, log, and `texlr-manifest.json` exist. Return
     those absolute paths with a one-paragraph content summary.
 
 ## Tool availability
@@ -68,6 +71,8 @@ Texlr is not installed globally.
 - Use a concise title, useful metadata, descriptive headings, captions, and
   cross-references.
 - Escape LaTeX-special characters and use `\url{...}` for URLs.
+- Preserve the monochrome, high-contrast HgbArticle visual language. Use color
+  only when it communicates information that typography or line style cannot.
 - Prefer readable tables and diagrams over dense prose, but do not add
   decorative complexity.
 - Do not claim completion until Texlr returns `"success": true` and the expected

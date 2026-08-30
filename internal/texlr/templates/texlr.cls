@@ -31,6 +31,7 @@
 \RequirePackage{caption}
 \RequirePackage{fancyhdr}
 \RequirePackage{titlesec}
+\PassOptionsToPackage{hyphens,obeyspaces,spaces,lowtilde}{url}
 \RequirePackage{hyperref}
 \RequirePackage{url}
 
@@ -53,6 +54,7 @@
 \raggedbottom
 \setlength{\parindent}{1.5em}
 \setlength{\parskip}{0pt plus 0.1pt}
+\setlength{\emergencystretch}{2em}
 \setlist{
   partopsep=0ex plus 0.1ex,
   topsep=0.6ex plus 0.3ex,

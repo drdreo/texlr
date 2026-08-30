@@ -154,7 +154,9 @@ Escape ordinary text containing these characters:
 
 Use `\textasciitilde{}` and `\textasciicircum{}` for literal tilde and caret.
 Use `\textbackslash{}` for a literal backslash. Put URLs in `\url{...}` rather
-than escaping them manually.
+than escaping them manually. Use `\path{...}` for file paths, route paths, and
+long code identifiers so LaTeX can break them safely; reserve `\texttt{...}`
+for short inline tokens.
 
 Do not paste Markdown fences, headings, tables, or emphasis syntax into the
 LaTeX source. Convert them to LaTeX environments and commands.
