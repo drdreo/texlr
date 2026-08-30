@@ -1,0 +1,15 @@
+digraph Pipeline {
+  graph [bgcolor="transparent", rankdir=LR, pad=0.2, nodesep=0.45, ranksep=0.65];
+  node [shape=box, style="rounded,filled", fontname="Helvetica", color="#3157D5",
+        fillcolor="#F5F7FB", fontcolor="#172033", penwidth=1.2, margin="0.16,0.10"];
+  edge [color="#667085", fontcolor="#667085", fontname="Helvetica", penwidth=1.2, arrowsize=0.75];
+
+  stage [label="Stage sources"];
+  diagrams [label="Render diagrams"];
+  compile [label="Tectonic compile"];
+  publish [label="Publish outputs"];
+
+  stage -> diagrams;
+  diagrams -> compile [label=" PDFs"];
+  compile -> publish [label=" atomic"];
+}

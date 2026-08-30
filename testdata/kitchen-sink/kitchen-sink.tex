@@ -1,0 +1,146 @@
+\documentclass{texlr}
+
+\title{Texlr kitchen sink: every class feature on paper}
+\author{Texlr test agent}
+\date{30 August 2026}
+\project{Texlr}
+\status{Visual regression fixture}
+\repository{https://github.com/drdreo/texlr}
+\revision{kitchen-sink}
+\runningtitle{Texlr kitchen sink}
+
+\begin{document}
+\maketitle
+
+\section{Purpose}
+
+This document exercises every feature of the \texttt{texlr} class in one
+build so a rendered copy can be compared against a previous screenshot. Each
+section states what to look for. The title block above should show all six
+metadata rows in monochrome sans-serif type.
+
+\section{Typography and inline markup}
+
+Body text is serif with a \(1.5\)\,em paragraph indent and no inter-paragraph
+gap. Inline markup: \emph{emphasis}, \textbf{bold}, \texttt{inline-code},
+a breakable path like \path{internal/texlr/templates/texlr.cls}, and a URL
+such as \url{https://github.com/drdreo/texlr/blob/main/README.md} rendered in
+sans-serif without a colored border.
+
+Escaped specials must all print literally: \& \% \$ \# \_ \{ \}
+\textasciitilde{} \textasciicircum{} \textbackslash{} and a
+footnote\footnote{Footnotes use the article default layout.} completes the set.
+
+Inline math \(e^{i\pi} + 1 = 0\) and a displayed equation:
+\begin{equation}
+  \operatorname{coverage}(D) = \frac{\lvert \text{features shown} \rvert}
+                                    {\lvert \text{features total} \rvert}
+  \label{eq:coverage}
+\end{equation}
+Equation~\ref{eq:coverage} also verifies cross-references.
+
+\section{Lists}
+
+\subsection{Itemize and enumerate}
+
+\begin{itemize}
+  \item First unordered entry with tight vertical spacing.
+  \item Second entry.
+  \begin{itemize}
+    \item Nested entry.
+  \end{itemize}
+\end{itemize}
+
+\begin{enumerate}
+  \item First ordered step.
+  \item Second ordered step.
+\end{enumerate}
+
+\subsection{Description}
+
+\begin{description}
+  \item[callout] A bordered panel with an accent-colored title.
+  \item[decision] A callout preloaded with a ``Decision:'' title.
+\end{description}
+
+\section{Callouts and decisions}
+
+\begin{callout}[Verify first]
+The callout title above must render in the blue accent while this body text
+stays black on the light panel background with a visible border.
+\end{callout}
+
+\begin{callout}
+A callout without an optional argument falls back to the ``Note'' title.
+\end{callout}
+
+\decision{Adopt the kitchen-sink fixture}{Keeping one document that shows
+every feature makes visual regressions reviewable from a single build.}
+
+\section{Table}
+
+\begin{table}[ht]
+  \centering
+  \caption{Feature coverage summary.}
+  \label{tab:coverage}
+  \begin{tabularx}{\linewidth}{@{}l X l@{}}
+    \toprule
+    Feature & What to check & State \\
+    \midrule
+    Title block & Six metadata rows, monochrome & Shown \\
+    Callout & Accent title, panel background & Shown \\
+    Diagrams & Graphviz and Mermaid figures & Shown \\
+    Code & Numbered listing on gray background & Shown \\
+    \bottomrule
+  \end{tabularx}
+\end{table}
+
+Table~\ref{tab:coverage} uses booktabs rules and a stretching X column.
+
+\section{Code listing}
+
+\begin{lstlisting}[language=bash,caption={Build command under test}]
+texlr build kitchen-sink.tex \
+  --pdf artifacts/kitchen-sink.pdf \
+  --source artifacts/source \
+  --log artifacts/kitchen-sink.log --force
+\end{lstlisting}
+
+\section{Figures}
+
+\subsection{Graphviz}
+
+\begin{figure}[ht]
+  \centering
+  \graphviz[width=0.85\linewidth]{diagrams/pipeline.dot}
+  \caption{Texlr build pipeline rendered from a DOT source.}
+  \label{fig:pipeline}
+\end{figure}
+
+Figure~\ref{fig:pipeline} should use the restrained blue-gray palette.
+
+\subsection{Mermaid}
+
+\begin{figure}[ht]
+  \centering
+  \mermaid[width=0.9\linewidth]{diagrams/states.mmd}
+  \caption{Build states rendered from a Mermaid source.}
+  \label{fig:states}
+\end{figure}
+
+\subsection{Ordinary image}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\linewidth]{images/sample.png}
+  \caption{A PNG included with ordinary \texttt{\textbackslash includegraphics}.}
+  \label{fig:png}
+\end{figure}
+
+\section{Page furniture}
+
+From page two onward the header must show the short running title
+``Texlr kitchen sink'' on the left and the page number on the right, with no
+rule. Page one uses the plain style with a centered footer number.
+
+\end{document}
