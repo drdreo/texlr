@@ -62,7 +62,7 @@ while the first channel is being validated.}
 \begin{table}[ht]
   \centering
   \caption{Workstream summary.}
-  \begin{tabularx}{\linewidth}{@{}l X l@{}}
+  \begin{tabularx}{\linewidth}{@{}l >{\raggedright\arraybackslash}X l@{}}
     \toprule
     Workstream & Outcome & State \\
     \midrule
@@ -72,6 +72,11 @@ while the first channel is being validated.}
   \end{tabularx}
 \end{table}
 ```
+
+Use `>{\raggedright\arraybackslash}X` rather than bare `X`: justified narrow
+columns reliably produce underfull-box warnings. Inside table cells prefer
+`\texttt{...}` over `\path{...}`; `\path` interacts badly with `tabularx`
+column measurement.
 
 ### Ordinary image
 
@@ -139,6 +144,22 @@ LaTeX:
 \end{figure}
 ```
 
+## Diagram sizing
+
+The text block is roughly 414 by 628 points. The `width=` option scales both
+axes, so a diagram's natural aspect ratio decides both legibility and float
+placement:
+
+- Keep a diagram's natural width under about 750 points. Beyond four or five
+  left-to-right stages, switch to `rankdir=TB` (Graphviz) or `flowchart TB`
+  (Mermaid) — a very wide diagram scaled to `\linewidth` renders its labels
+  unreadably small.
+- A diagram naturally taller than about 500 points will not share a page with
+  text; simplify it or accept a dedicated float page.
+- Large floats can silently defer to the end of the document. Standard float
+  tuning in the preamble (`\topfraction`, `\floatpagefraction`, `[htbp]`) is
+  permitted when that happens.
+
 ## LaTeX safety
 
 Escape ordinary text containing these characters:
@@ -157,7 +178,8 @@ Use `\textasciitilde{}` and `\textasciicircum{}` for literal tilde and caret.
 Use `\textbackslash{}` for a literal backslash. Put URLs in `\url{...}` rather
 than escaping them manually. Use `\path{...}` for file paths, route paths, and
 long code identifiers so LaTeX can break them safely; reserve `\texttt{...}`
-for short inline tokens.
+for short inline tokens — a `\texttt` token longer than roughly 25 characters
+cannot break across lines and will overflow the margin.
 
 Do not paste Markdown fences, headings, tables, or emphasis syntax into the
 LaTeX source. Convert them to LaTeX environments and commands.

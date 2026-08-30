@@ -1,14 +1,27 @@
 ---
 name: texlr-handoff
-description: Create polished PDF and self-contained LaTeX source handoff documents with Texlr. Use when the user asks for an agent handoff, implementation report, architecture brief, research report, delivery summary, polished plan, or conversion of Markdown/project findings into a designed document with images, Graphviz, or Mermaid.
+description: Create polished PDF and self-contained LaTeX source handoff documents with Texlr. Use only when the deliverable is a local document file — an agent handoff, implementation report, architecture brief, research report, delivery summary, polished plan, or conversion of Markdown/project findings into a designed PDF with images, Graphviz, or Mermaid. Do not use when the document will be posted or uploaded to a text platform (Slack, Notion, Google Docs, a wiki, an issue tracker, a PR description) — those want native Markdown or rich text, not a PDF attachment.
 license: MIT
 compatibility: Requires Texlr and Nix. Mermaid rendering on macOS requires Google Chrome, Chromium, or Brave Browser.
 ---
 
 # Texlr handoff
 
-Use Texlr when the requested deliverable is a handoff or polished document. The
-canonical source must be LaTeX; do not make Markdown the final artifact.
+Use Texlr when the requested deliverable is a handoff or polished document
+delivered as a local file. The canonical source must be LaTeX; do not make
+Markdown the final artifact.
+
+## Destination check
+
+Decide where the document will live before authoring:
+
+- Local file, artifacts directory, email attachment, or print: use Texlr.
+- Slack, Notion, Google Docs, a wiki, an issue tracker, or a PR description:
+  do not use Texlr. Write native Markdown (or the platform's rich text)
+  directly — a PDF attachment is worse to read and edit there.
+- Both (a polished PDF plus a posted summary): build the PDF with Texlr and
+  write a separate short native summary for the platform; never post the PDF
+  as a substitute for a native page.
 
 Before authoring, read `references/authoring.md` from this skill directory.
 
@@ -22,7 +35,9 @@ Before authoring, read `references/authoring.md` from this skill directory.
    - `<repo>/artifacts/<slug>-source/`
    - `<repo>/artifacts/<slug>.log`
 3. Create the authoring tree in a temporary directory. Keep the main `.tex`,
-   images, and all diagram sources beneath that one root. The published source
+   images, and all diagram sources beneath that one root. Everything beneath
+   that root ships in the published source bundle — keep scratch files,
+   measurement outputs, and unrelated assets out of it. The published source
    bundle is the editable artifact; remove the temporary authoring tree after a
    successful build.
 4. Author direct LaTeX with `\documentclass{texlr}`. Adapt the document structure
@@ -52,9 +67,12 @@ Before authoring, read `references/authoring.md` from this skill directory.
    Never use `--force` to bypass an unrelated-directory safety error.
 9. On failure, inspect the JSON `error`, `logPath`, and retained `workDir`; fix
    the source and retry until validation and build both succeed.
-10. Inspect the successful build log. Fix overfull boxes, missing characters,
-    and undefined references before delivery. Review underfull-box warnings
-    visually and keep them only when they do not harm the layout.
+10. Inspect the successful build log. Fix overfull boxes, `Float too large`
+    warnings, missing characters, and undefined references before delivery.
+    Floats deferred to the end of the document produce no log warning at all —
+    rasterize the PDF (for example with Ghostscript) and confirm every figure
+    lands near its reference and its labels are legible. Review underfull-box
+    warnings visually and keep them only when they do not harm the layout.
 11. Verify the PDF, source directory, log, and `texlr-manifest.json` exist. Return
     those absolute paths with a one-paragraph content summary.
 
