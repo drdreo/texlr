@@ -93,17 +93,18 @@ Supported image formats are PNG, JPEG, and PDF. Convert SVG before inclusion.
 ```dot
 digraph Dependencies {
   graph [rankdir=LR, bgcolor="transparent"];
-  node [shape=box, style="rounded,filled", fillcolor="#F2F2F2",
-        color="#333333", fontcolor="#000000", fontname="Helvetica"];
-  edge [color="#555555", fontcolor="#333333"];
+  node [shape=box, style="rounded,filled", fillcolor="#F5F7FB",
+        color="#3157D5", fontcolor="#172033", fontname="Helvetica"];
+  edge [color="#667085", fontcolor="#475569"];
   "Positioning" -> "Outbound tests";
   "Instrumentation" -> "Channel decision";
   "Outbound tests" -> "Channel decision";
 }
 ```
 
-Keep diagrams monochrome by default so they match the HgbArticle-derived theme.
-Use color only when it carries meaning that a caption or line style cannot.
+Use Texlr's restrained blue-gray palette by default. Semantic accent colors are
+welcome when they clarify distinct node roles; keep the title and body typography
+monochrome and high-contrast.
 
 LaTeX:
 

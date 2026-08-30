@@ -9,7 +9,7 @@ toolchain.
 ## Why Texlr
 
 - LaTeX is the canonical source—no Markdown conversion layer.
-- A monochrome, high-contrast HgbArticle-derived class keeps agent output consistent.
+- HgbArticle-derived typography keeps title text high-contrast while reserving restrained color for callouts and diagrams.
 - Graphviz and Mermaid diagrams render from helper macros before compilation.
 - PDF, source bundle, and log destinations are independently controlled.
 - Existing outputs are never replaced unless `--force` is explicit.

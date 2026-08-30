@@ -209,7 +209,7 @@ func renderDiagrams(ctx context.Context, diagrams []diagram, log io.Writer) ([]d
 			args = []string{"-Tpdf", "-o", rawPath, item.sourcePath}
 		case "mermaid":
 			name = "mmdc"
-			args = []string{"-i", item.sourcePath, "-o", rawPath, "-b", "transparent", "-t", "neutral"}
+			args = []string{"-i", item.sourcePath, "-o", rawPath, "-b", "transparent"}
 		default:
 			_ = os.Remove(rawPath)
 			return results, fmt.Errorf("unsupported diagram kind %q", item.kind)

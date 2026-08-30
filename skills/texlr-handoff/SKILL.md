@@ -71,8 +71,8 @@ Texlr is not installed globally.
 - Use a concise title, useful metadata, descriptive headings, captions, and
   cross-references.
 - Escape LaTeX-special characters and use `\url{...}` for URLs.
-- Preserve the monochrome, high-contrast HgbArticle visual language. Use color
-  only when it communicates information that typography or line style cannot.
+- Preserve HgbArticle's monochrome, high-contrast title and body typography.
+  Restrained blue-gray or semantic accents belong only in callouts and diagrams.
 - Prefer readable tables and diagrams over dense prose, but do not add
   decorative complexity.
 - Do not claim completion until Texlr returns `"success": true` and the expected

@@ -35,13 +35,13 @@
 \RequirePackage{hyperref}
 \RequirePackage{url}
 
-% HgbArticle is intentionally monochrome. Keep Texlr's additions neutral and
-% high-contrast rather than introducing a separate brand palette.
+% Keep HgbArticle's high-contrast monochrome typography. Restrained accents are
+% reserved for information boxes and diagrams, never title or metadata text.
 \colorlet{texlrInk}{black}
 \definecolor{texlrMuted}{gray}{0.25}
-\colorlet{texlrAccent}{black}
-\definecolor{texlrRule}{gray}{0.70}
-\definecolor{texlrPanel}{gray}{0.95}
+\definecolor{texlrAccent}{HTML}{3157D5}
+\definecolor{texlrRule}{HTML}{D8DEE9}
+\definecolor{texlrPanel}{HTML}{F5F7FB}
 \definecolor{texlrCode}{gray}{0.95}
 
 \hypersetup{
@@ -162,7 +162,8 @@
    \setlength{\fboxsep}{10pt}%
    \begin{lrbox}{\texlrCalloutBox}%
    \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
-   {\sffamily\bfseries #1}\par\smallskip}
+   {\sffamily\bfseries\color{texlrAccent}#1}\par\smallskip
+   \color{texlrInk}}
   {\end{minipage}%
    \end{lrbox}%
    \noindent\fcolorbox{texlrRule}{texlrPanel}{\usebox{\texlrCalloutBox}}%
