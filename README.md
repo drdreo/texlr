@@ -16,6 +16,46 @@ toolchain.
 - Failures retain the complete log and staging directory for agent debugging.
 - Human-readable output is the default; `--json` provides a stable agent API.
 
+## What it looks like
+
+<p align="center">
+  <img src="docs/preview-title.png" width="32%" alt="Title page of an agent-generated architecture brief">
+  <img src="docs/preview-callouts.png" width="32%" alt="Callout and decision panels with a booktabs table">
+  <img src="docs/preview-diagrams.png" width="32%" alt="Code listing with rendered Graphviz and Mermaid figures">
+</p>
+
+Left to right: the title block and a callout, decision panels with a booktabs
+table, and a code listing with rendered Graphviz and Mermaid figures. All
+three pages were authored and built end-to-end by coding agents using the
+bundled skill — no hand-tuned LaTeX.
+
+## Get going
+
+1. **Install** Texlr and its document toolchain into your profile:
+
+   ```sh
+   nix profile add github:drdreo/texlr
+   ```
+
+2. **Teach your agent.** Link the [bundled skill](#agent-skill) into your
+   agent's skill directory. From then on, asking for a handoff, implementation
+   report, or architecture brief as a local document routes through Texlr;
+   asking to post one to Slack, Notion, or a PR stays native Markdown.
+
+3. **Or write one yourself.** Author a `.tex` with `\documentclass{texlr}`
+   ([full example](examples/handoff.tex)), then:
+
+   ```sh
+   texlr validate handoff.tex
+   ```
+
+   ```sh
+   texlr build handoff.tex --pdf out/handoff.pdf --source out/handoff-source --log out/handoff.log
+   ```
+
+   You get a polished PDF, an editable self-contained LaTeX bundle, and the
+   full build log. The sections below cover every option in detail.
+
 ## Install with Nix
 
 Run directly from a checkout:
@@ -44,6 +84,21 @@ nix develop
 go test ./...
 go run ./cmd/texlr version
 ```
+
+### Visual regression fixture
+
+[`testdata/kitchen-sink/kitchen-sink.tex`](testdata/kitchen-sink/kitchen-sink.tex)
+exercises every class feature — title metadata, callouts, decisions, tables,
+listings, math, Graphviz, Mermaid, and plain images — in one document. Build it
+and rasterize each page for screenshot comparison:
+
+```sh
+nix develop -c ./scripts/screenshot-test.sh
+```
+
+The PDF and per-page PNGs land in `artifacts/kitchen-sink/`. After changing
+`texlr.cls` or diagram rendering, rebuild and compare the pages against a
+known-good copy.
 
 ## Agent skill
 

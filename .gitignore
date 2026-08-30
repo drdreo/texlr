@@ -1,6 +1,7 @@
 .DS_Store
 /result
 /artifacts/
+/testdata/kitchen-sink/images/
 *.aux
 *.log
 *.out

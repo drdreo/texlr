@@ -1,0 +1,5 @@
+flowchart LR
+    Staged --> Rendered
+    Rendered --> Compiled
+    Compiled --> Published
+    Compiled -->|failure| Retained

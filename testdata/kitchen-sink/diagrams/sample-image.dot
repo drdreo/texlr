@@ -1,0 +1,6 @@
+digraph SampleImage {
+  graph [bgcolor="white", pad=0.3];
+  node [shape=box, style="rounded,filled", fontname="Helvetica", color="#3157D5",
+        fillcolor="#F5F7FB", fontcolor="#172033", penwidth=1.2];
+  "PNG asset" -> "included via graphicx";
+}
