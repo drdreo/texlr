@@ -31,9 +31,9 @@ nix profile install github:drdreo/texlr
 ```
 
 The package includes Texlr, Tectonic, Graphviz, Mermaid CLI, and Ghostscript
-for PDF normalization. Linux builds
-also include Chromium. On macOS, Mermaid rendering uses an installed Google
-Chrome, Chromium, or Brave Browser; Texlr discovers standard application paths.
+for PDF normalization. Linux builds also include Chromium. On macOS, Mermaid
+rendering uses an installed Google Chrome, Chromium, or Brave Browser; Texlr
+discovers standard application paths.
 Tectonic populates its local TeX cache on the first build, which requires a
 network connection.
 
@@ -44,6 +44,21 @@ nix develop
 go test ./...
 go run ./cmd/texlr version
 ```
+
+## Agent skill
+
+Texlr ships an [Agent Skills](https://agentskills.io/) skill that teaches agents
+to turn plans, project findings, and delivery summaries into validated handoff
+artifacts. Install it globally for Pi and compatible local harnesses:
+
+```sh
+mkdir -p ~/.agents/skills
+ln -s "$PWD/skills/texlr-handoff" ~/.agents/skills/texlr-handoff
+```
+
+New Pi sessions discover the skill automatically when the request mentions a
+handoff, implementation report, architecture brief, research report, delivery
+summary, or polished plan. Use `/skill:texlr-handoff` to force-load it.
 
 ## Write a handoff
 
