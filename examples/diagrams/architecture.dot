@@ -1,7 +1,7 @@
 digraph Architecture {
   graph [bgcolor="transparent", rankdir=LR, pad=0.2, nodesep=0.45, ranksep=0.65];
-  node [shape=box, style="rounded,filled", fontname="Helvetica", color="#3157D5", fillcolor="#F5F7FB", fontcolor="#172033", penwidth=1.2, margin="0.16,0.10"];
-  edge [color="#667085", penwidth=1.2, arrowsize=0.75];
+  node [shape=box, style="rounded,filled", fontname="Helvetica", color="#333333", fillcolor="#F2F2F2", fontcolor="#000000", penwidth=1.0, margin="0.16,0.10"];
+  edge [color="#555555", penwidth=1.0, arrowsize=0.75];
 
   api [label="Application API"];
   adapter [label="Search adapter"];
@@ -10,7 +10,7 @@ digraph Architecture {
   next [label="Versioned index"];
 
   api -> adapter;
-  adapter -> current [label=" read", fontname="Helvetica", fontcolor="#667085"];
-  adapter -> next [label=" dual write", fontname="Helvetica", fontcolor="#667085"];
-  queue -> next [label=" batches", fontname="Helvetica", fontcolor="#667085"];
+  adapter -> current [label=" read", fontname="Helvetica", fontcolor="#333333"];
+  adapter -> next [label=" dual write", fontname="Helvetica", fontcolor="#333333"];
+  queue -> next [label=" batches", fontname="Helvetica", fontcolor="#333333"];
 }

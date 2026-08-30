@@ -17,7 +17,8 @@
 \RequirePackage{lmodern}
 \RequirePackage{microtype}
 \RequirePackage{etoolbox}
-\RequirePackage[top=30mm,bottom=32mm,left=30mm,right=30mm]{geometry}
+% Match the single-column HgbArticle page geometry.
+\RequirePackage[top=36mm,bottom=40mm,left=32mm,right=32mm]{geometry}
 \RequirePackage{xcolor}
 \RequirePackage{graphicx}
 \RequirePackage{booktabs}
@@ -33,46 +34,61 @@
 \RequirePackage{hyperref}
 \RequirePackage{url}
 
-\definecolor{texlrInk}{HTML}{172033}
-\definecolor{texlrMuted}{HTML}{667085}
-\definecolor{texlrAccent}{HTML}{3157D5}
-\definecolor{texlrRule}{HTML}{D8DEE9}
-\definecolor{texlrPanel}{HTML}{F5F7FB}
-\definecolor{texlrCode}{HTML}{F3F5F8}
+% HgbArticle is intentionally monochrome. Keep Texlr's additions neutral and
+% high-contrast rather than introducing a separate brand palette.
+\colorlet{texlrInk}{black}
+\definecolor{texlrMuted}{gray}{0.25}
+\colorlet{texlrAccent}{black}
+\definecolor{texlrRule}{gray}{0.70}
+\definecolor{texlrPanel}{gray}{0.95}
+\definecolor{texlrCode}{gray}{0.95}
 
 \hypersetup{
-  colorlinks=true,
-  linkcolor=texlrAccent,
-  urlcolor=texlrAccent,
-  citecolor=texlrAccent,
+  colorlinks=false,
   pdfborder={0 0 0}
 }
+\AtBeginDocument{\urlstyle{sf}}
 
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{0.65em}
-\setlist{nosep,leftmargin=1.5em,topsep=0.35em}
-\captionsetup{font=small,labelfont=bf,labelsep=period}
+\frenchspacing
+\raggedbottom
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt plus 0.1pt}
+\setlist{
+  partopsep=0ex plus 0.1ex,
+  topsep=0.6ex plus 0.3ex,
+  itemsep=0ex plus 0.1ex,
+  parsep=0.4ex plus 0.2ex
+}
+\captionsetup{font=small,labelfont=bf,labelsep=period,margin=5mm}
+\setlength{\abovecaptionskip}{10pt}
+\setlength{\belowcaptionskip}{10pt}
 
 \titleformat{\section}
-  {\Large\sffamily\bfseries\color{texlrInk}}
+  {\Large\sffamily\bfseries}
   {\thesection}{0.75em}{}
 \titleformat{\subsection}
-  {\large\sffamily\bfseries\color{texlrInk}}
+  {\large\sffamily\bfseries}
   {\thesubsection}{0.65em}{}
 \titleformat{\subsubsection}
-  {\normalsize\sffamily\bfseries\color{texlrInk}}
+  {\normalsize\sffamily\bfseries}
   {\thesubsubsection}{0.55em}{}
 \titlespacing*{\section}{0pt}{2.1em}{0.7em}
 \titlespacing*{\subsection}{0pt}{1.5em}{0.45em}
 
+% Follow hgbheadings: sans-serif running title, page number at right, no rule.
 \pagestyle{fancy}
 \setlength{\headheight}{22pt}
 \fancyhf{}
-\renewcommand{\headrulewidth}{0.4pt}
-\renewcommand{\headrule}{\hbox to\headwidth{\color{texlrRule}\leaders\hrule height \headrulewidth\hfill}}
-\fancyhead[L]{\small\sffamily\color{texlrMuted}\texlrRunningTitle}
-\fancyhead[R]{\small\sffamily\color{texlrMuted}\texlrStatus}
-\fancyfoot[C]{\small\sffamily\color{texlrMuted}\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\sffamily\texlrRunningTitle}
+\fancyhead[R]{\sffamily\thepage}
+\fancypagestyle{plain}{%
+  \fancyhf{}%
+  \fancyfoot[C]{\sffamily\thepage}%
+  \renewcommand{\headrulewidth}{0pt}%
+  \renewcommand{\footrulewidth}{0pt}%
+}
 
 \newcommand{\texlrProject}{}
 \newcommand{\texlrStatus}{Handoff}
@@ -87,45 +103,52 @@
 
 \makeatletter
 \renewcommand{\maketitle}{%
-  \thispagestyle{empty}%
+  \thispagestyle{plain}%
   \begingroup
   \sffamily
-  {\small\bfseries\color{texlrAccent}\MakeUppercase{\texlrStatus}\par}
-  \vspace{0.8em}
-  {\huge\bfseries\color{texlrInk}\@title\par}
-  \ifdefempty{\texlrProject}{}{%
-    \vspace{0.7em}%
-    {\large\color{texlrMuted}\texlrProject\par}%
-  }
-  \vspace{1.8em}
-  \color{texlrRule}\hrule height 1pt
-  \vspace{1em}
-  \begin{tabularx}{\textwidth}{@{}>{\bfseries\color{texlrMuted}}l X@{}}
-    Author & \@author \\
-    Date & \@date \\
-    \ifdefempty{\texlrRepository}{}{Repository & \url{\texlrRepository} \\}
-    \ifdefempty{\texlrRevision}{}{Revision & \texttt{\texlrRevision} \\}
-  \end{tabularx}
-  \vspace{1em}
-  \color{texlrRule}\hrule height 1pt
+  \null\vspace{2em}%
+  \begin{center}
+    {\LARGE\bfseries\@title\par}%
+    \ifdefempty{\texlrProject}{}{%
+      \vspace{0.9em}%
+      {\large\texlrProject\par}%
+    }%
+    \vspace{1.2em}%
+    {\large\@author\par}%
+    \vspace{0.35em}%
+    {\normalsize\@date\par}%
+    \ifdefempty{\texlrStatus}{}{%
+      \vspace{0.75em}%
+      {\small\texlrStatus\par}%
+    }%
+    \ifdefempty{\texlrRepository}{}{%
+      \vspace{0.25em}%
+      {\small\url{\texlrRepository}\par}%
+    }%
+    \ifdefempty{\texlrRevision}{}{%
+      \vspace{0.25em}%
+      {\small\texlrRevision\par}%
+    }%
+  \end{center}
   \endgroup
-  \vspace{2em}
-  \ifdefempty{\texlrRunningTitle}{\global\let\texlrRunningTitle\@title}{}
+  \vspace{2em}%
+  \ifdefempty{\texlrRunningTitle}{\global\let\texlrRunningTitle\@title}{}%
 }
 \makeatother
 
 \lstdefinestyle{texlr}{
   backgroundcolor=\color{texlrCode},
-  basicstyle=\ttfamily\small,
+  basicstyle=\ttfamily\footnotesize,
   breaklines=true,
-  frame=single,
-  rulecolor=\color{texlrRule},
-  framerule=0.5pt,
+  frame=none,
   numbers=left,
-  numberstyle=\tiny\color{texlrMuted},
-  xleftmargin=1.6em,
-  framexleftmargin=1.2em,
+  numbersep=5pt,
+  numberstyle=\normalfont\scriptsize,
+  xleftmargin=6mm,
+  framexleftmargin=6mm,
   showstringspaces=false,
+  columns=flexible,
+  keepspaces=true,
   tabsize=2
 }
 \lstset{style=texlr}
@@ -137,8 +160,7 @@
    \setlength{\fboxsep}{10pt}%
    \begin{lrbox}{\texlrCalloutBox}%
    \begin{minipage}{\dimexpr\linewidth-2\fboxsep-2\fboxrule\relax}
-   {\sffamily\bfseries\color{texlrAccent}#1}\par\smallskip
-   \color{texlrInk}}
+   {\sffamily\bfseries #1}\par\smallskip}
   {\end{minipage}%
    \end{lrbox}%
    \noindent\fcolorbox{texlrRule}{texlrPanel}{\usebox{\texlrCalloutBox}}%

@@ -7,6 +7,7 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 	"testing"
 )
 
@@ -115,6 +116,13 @@ func TestBuildPublishesArtifacts(t *testing.T) {
 		if _, err := os.Stat(path); err != nil {
 			t.Errorf("expected artifact %s: %v", path, err)
 		}
+	}
+	logContent, err := os.ReadFile(options.logPath)
+	if err != nil {
+		t.Fatalf("read build log: %v", err)
+	}
+	if !strings.Contains(string(logContent), "-t neutral") {
+		t.Fatalf("Mermaid neutral theme flag missing from log: %s", logContent)
 	}
 	manifestContent, err := os.ReadFile(filepath.Join(options.sourcePath, "texlr-manifest.json"))
 	if err != nil {
