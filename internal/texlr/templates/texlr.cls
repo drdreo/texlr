@@ -61,6 +61,10 @@
   itemsep=0ex plus 0.1ex,
   parsep=0.4ex plus 0.2ex
 }
+% Latin Modern's small text bullet can look like a checkbox when rasterized.
+% Use the round math bullet for ordinary top-level lists; explicit labels still
+% override this default for intentional task-list markers.
+\setlist[itemize,1]{label=\(\bullet\)}
 \captionsetup{font=small,labelfont=bf,labelsep=period,margin=5mm}
 \setlength{\abovecaptionskip}{10pt}
 \setlength{\belowcaptionskip}{10pt}

@@ -10,6 +10,13 @@ import (
 	"testing"
 )
 
+func TestClassTemplateUsesRoundBulletsForOrdinaryLists(t *testing.T) {
+	const roundBulletDefault = `\setlist[itemize,1]{label=\(\bullet\)}`
+	if !bytes.Contains(classTemplate, []byte(roundBulletDefault)) {
+		t.Fatalf("class template does not set the ordinary itemize label to a round bullet")
+	}
+}
+
 func TestDiscoverDiagrams(t *testing.T) {
 	root := t.TempDir()
 	writeTestFile(t, filepath.Join(root, "main.tex"), `
